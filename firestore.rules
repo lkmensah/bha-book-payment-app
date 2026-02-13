@@ -1,0 +1,46 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    match /users/{userId} {
+      allow read, write: if isAdmin() || isOwner(userId);
+    }
+
+    match /students/{studentId} {
+      // Allow anyone to read a specific student document (e.g., for the parent portal),
+      // but only signed-in users can write/update.
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    match /books/{bookId} {
+      // Allow anyone to read book details, but only signed-in users can modify them.
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    match /academicYears/{academicYearId} {
+      allow read, write: if isSignedIn();
+    }
+
+    match /payments/{paymentId} {
+      // Allow anyone to read payment details (needed for balance calculation in the parent portal).
+      // Only admins can create/delete payments through the trusted admin dashboard.
+      // NOTE: Real payments will be created via a secure Cloud Function.
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+  }
+}

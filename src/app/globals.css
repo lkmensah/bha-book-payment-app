@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 231 60% 94%;
+    --foreground: 231 20% 25%;
+    --card: 231 60% 99%;
+    --card-foreground: 231 20% 25%;
+    --popover: 231 60% 99%;
+    --popover-foreground: 231 20% 25%;
+    --primary: 231 48% 54%;
+    --primary-foreground: 231 60% 99%;
+    --secondary: 231 50% 88%;
+    --secondary-foreground: 231 20% 25%;
+    --muted: 231 50% 88%;
+    --muted-foreground: 231 20% 45%;
+    --accent: 91 43% 54%;
+    --accent-foreground: 48 100% 98%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 231 40% 80%;
+    --input: 231 40% 85%;
+    --ring: 231 48% 54%;
+    --radius: 0.5rem;
+    --chart-1: 231 48% 54%;
+    --chart-2: 91 43% 54%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+
+  .dark {
+    --background: 231 20% 12%;
+    --foreground: 231 60% 94%;
+    --card: 231 20% 16%;
+    --card-foreground: 231 60% 94%;
+    --popover: 231 20% 12%;
+    --popover-foreground: 231 60% 94%;
+    --primary: 231 48% 64%;
+    --primary-foreground: 231 20% 12%;
+    --secondary: 231 20% 24%;
+    --secondary-foreground: 231 60% 94%;
+    --muted: 231 20% 24%;
+    --muted-foreground: 231 20% 65%;
+    --accent: 91 43% 54%;
+    --accent-foreground: 48 100% 98%;
+    --destructive: 0 62.8% 45.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 231 20% 24%;
+    --input: 231 20% 24%;
+    --ring: 231 48% 64%;
+    --chart-1: 231 48% 64%;
+    --chart-2: 91 43% 54%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /* Hide spinner buttons on number inputs */
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+}
+
+@media print {
+  body {
+    overflow: visible;
+  }
+
+  .dialog-content {
+    max-height: none !important;
+    overflow: visible !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Stores user profile information.",
+      "type": "object",
+      "properties": {
+        "requiresPasswordChange": {
+          "type": "boolean",
+          "description": "Flag to indicate if the user must change their password on next login."
+        },
+        "role": {
+          "type": "string",
+          "description": "The user's role, used for authorization.",
+          "enum": [
+            "admin",
+            "user"
+          ]
+        }
+      },
+      "required": [
+        "requiresPasswordChange",
+        "role"
+      ]
+    },
+    "Student": {
+      "title": "Student",
+      "description": "Represents a student in the school.",
+      "type": "object",
+      "properties": {
+        "studentId": { "type": "string", "description": "Unique identifier for the student." },
+        "studentName": { "type": "string" },
+        "class": { "type": "string" },
+        "parentName": { "type": "string" },
+        "parentPhone": { "type": "string" },
+        "status": {
+          "type": "string",
+          "enum": ["Active", "Graduated"],
+          "description": "The current status of the student."
+        }
+      },
+      "required": ["studentId", "studentName", "class"]
+    },
+    "Book": {
+      "title": "Book",
+      "description": "Represents a book sold by the school.",
+      "type": "object",
+      "properties": {
+        "bookId": { "type": "string", "description": "Unique identifier for the book." },
+        "bookTitle": { "type": "string" },
+        "class": { "type": "string" },
+        "price": { "type": "number" }
+      },
+      "required": ["bookId", "bookTitle", "class", "price"]
+    },
+    "AcademicYear": {
+      "title": "Academic Year",
+      "description": "Represents an academic year.",
+      "type": "object",
+      "properties": {
+        "academicYearId": { "type": "string", "description": "Unique identifier for the academic year." },
+        "year": { "type": "string", "description": "The academic year, e.g., 2024/2025." }
+      },
+      "required": ["academicYearId", "year"]
+    },
+    "Payment": {
+      "title": "Payment",
+      "description": "Represents a payment made by a student for a book.",
+      "type": "object",
+      "properties": {
+        "paymentId": { "type": "string", "description": "Unique identifier for the payment." },
+        "date": { "type": "string", "format": "date-time" },
+        "studentId": { "type": "string" },
+        "bookId": { "type": "string" },
+        "academicYearId": { "type": "string" },
+        "amountPaid": { "type": "number" },
+        "method": { "type": "string", "enum": ["Cash", "Mobile Money", "Bank Transfer"] }
+      },
+      "required": ["paymentId", "date", "studentId", "bookId", "academicYearId", "amountPaid", "method"]
+    }
+  },
+  "auth": {
+    "providers": [
+      "email-password"
+    ]
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/backend/entities/UserProfile" },
+      "description": "Stores user profile information."
+    },
+    "/students/{studentId}": {
+      "schema": { "$ref": "#/backend/entities/Student" },
+      "description": "Stores all student records."
+    },
+    "/books/{bookId}": {
+      "schema": { "$ref": "#/backend/entities/Book" },
+      "description": "Stores all book records."
+    },
+    "/academicYears/{academicYearId}": {
+      "schema": { "$ref": "#/backend/entities/AcademicYear" },
+      "description": "Stores all academic year records."
+    },
+    "/payments/{paymentId}": {
+      "schema": { "$ref": "#/backend/entities/Payment" },
+      "description": "Stores all payment transaction records."
+    }
+  }
+}
