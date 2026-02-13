@@ -1,3 +1,4 @@
+
 "use client";
 
 import * as React from "react";
@@ -68,7 +69,7 @@ export default function ParentPaymentPage() {
 
     return relevantBooks
       .map(book => {
-        const paymentsForBook = payments.filter(p => p.bookId === book.bookId);
+        const paymentsForBook = payments.filter(p => p.studentId === student.studentId && p.bookId === book.bookId);
         const totalPaid = paymentsForBook.reduce((sum, p) => sum + p.amountPaid, 0);
         const balance = book.price - totalPaid;
         return { ...book, balance };
@@ -260,3 +261,4 @@ export default function ParentPaymentPage() {
     </div>
   );
 }
+
